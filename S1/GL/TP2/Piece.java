@@ -11,11 +11,17 @@ public class Piece {
         this.prix = prix;
     }
 
+    /**
+     * Calculates the total amount based on price and quantity.
+     */
     public double calculerMontant() {
         return this.prix * this.quantite;
     }
 
     @Override
+    /**
+     * Returns a string representation of the Piece object.
+     */
     public String toString() {
         return "Piece [ref=" + ref + ", nom=" + nom + ", quantite=" + quantite + ", prix=" + prix + "]";
     }
