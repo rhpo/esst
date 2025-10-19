@@ -9,6 +9,9 @@ public class Piece {
         this.quantitéStock += quantité;
     }
 
+    /**
+     * Calculates the total amount based on quantity and price.
+     */
     public double calculerMontant() {
         return this.quantité * this.prix;
     }
