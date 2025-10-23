@@ -1,0 +1,6 @@
+
+Q4 (EXO3):
+
++ Modifier le programme de la question 1 pour que chaqun des fils créés et apres l'affichage de son identité et l'identité de son pere, s'endorme pendant 10 secondes. A son réveil, le processus fils se termine en renvoyant à son père son ordre de création.
+
++ Le processus père doit attendre la terminaison de 3 de ses fils avant de terminer son execution. A la terminaison de chaque fils, le processus père affiche l'identité du fils terminé et son code de retour.
