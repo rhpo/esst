@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+
     let title = "CONTRAT DE DÉVELOPPEMENT DE LOGICIEL";
     let prestataire = {
         name: "TechNova Solutions SARL",
@@ -12,72 +13,71 @@
         rep: "Mme Leïla Hamdani",
     };
     let contractDate = new Date().toLocaleDateString("fr-FR");
+    let objet =
+        "Le présent contrat a pour objet la conception, le développement et la livraison d’un logiciel métier personnalisé pour le Client, conformément aux spécifications fonctionnelles détaillées dans le cahier des charges annexé au présent contrat.";
     let amount = "3 600 000 DZD";
     let filename = "contrat_developpement_logiciel.pdf";
+
     let articles = [
         {
             id: 1,
-            title: "Article 1 : Objet du contrat",
-            body: "Le présent contrat a pour objet la conception, le développement et la livraison d’un logiciel métier personnalisé pour le Client, conformément aux spécifications fonctionnelles détaillées dans le cahier des charges annexé au présent contrat.",
-        },
-        {
-            id: 2,
-            title: "Article 2 : Description du projet",
+            title: "Description du projet",
             body: "Le Prestataire s’engage à concevoir un logiciel de gestion interne destiné à automatiser les processus de facturation, de suivi client et de génération de rapports pour le Client. Le développement comprendra les modules suivants : gestion des utilisateurs, base de données clients, génération de documents PDF et tableau de bord d’analyse.",
         },
         {
-            id: 3,
-            title: "Article 3 : Obligations du Prestataire",
+            id: 2,
+            title: "Obligations du Prestataire",
             body: "Le Prestataire s’engage à : Concevoir et développer le logiciel conformément au cahier des charges validé. Effectuer les tests de validation avant la livraison. Assurer la formation du personnel du Client à l’utilisation du logiciel. Fournir une assistance technique pendant une période de trois (3) mois après la livraison finale.",
         },
         {
-            id: 4,
-            title: "Article 4 : Obligations du Client",
+            id: 3,
+            title: "Obligations du Client",
             body: "Le Client s’engage à : Fournir au Prestataire toutes les informations nécessaires à la bonne exécution du projet. Valider les livrables intermédiaires dans les délais convenus. Régler les paiements conformément aux modalités prévues à l’article 6.",
         },
         {
-            id: 5,
-            title: "Article 5 : Délai d’exécution",
+            id: 4,
+            title: "Délai d’exécution",
             body: "La durée totale du projet est fixée à quatre (4) mois à compter de la signature du présent contrat. Tout retard dû à une cause imputable au Client entraînera une prolongation équivalente du délai.",
         },
         {
-            id: 6,
-            title: "Article 6 : Conditions financières",
+            id: 5,
+            title: "Conditions financières",
             body: "Le montant global du contrat est fixé à 3 600 000 DZD, réparti comme suit : 30 % à la signature du contrat (acompte) ; 40 % à la livraison de la version bêta ; 30 % à la réception définitive du logiciel. Les paiements seront effectués par virement bancaire au compte du Prestataire indiqué sur la facture.",
         },
         {
-            id: 7,
-            title: "Article 7 : Propriété intellectuelle",
+            id: 6,
+            title: "Propriété intellectuelle",
             body: "Le Prestataire reste propriétaire de ses outils, méthodes, bibliothèques et composants réutilisables. Le Client devient propriétaire exclusif du logiciel final livré, sous réserve du paiement intégral du prix convenu.",
         },
         {
-            id: 8,
-            title: "Article 8 : Confidentialité",
+            id: 7,
+            title: "Confidentialité",
             body: "Chaque partie s’engage à conserver strictement confidentielles les informations échangées dans le cadre du présent contrat et à ne pas les divulguer sans l’accord préalable écrit de l’autre partie.",
         },
         {
-            id: 9,
-            title: "Article 9 : Garantie et maintenance",
+            id: 8,
+            title: "Garantie et maintenance",
             body: "Le Prestataire garantit le bon fonctionnement du logiciel pendant une période de trois (3) mois à compter de sa réception. Pendant cette période, toute anomalie signalée sera corrigée sans frais supplémentaires. Une offre de maintenance annuelle pourra être proposée séparément.",
         },
         {
-            id: 10,
-            title: "Article 10 : Résiliation",
+            id: 9,
+            title: "Article : Résiliation",
             body: "En cas d’inexécution grave de ses obligations par l’une des parties, l’autre partie pourra résilier le présent contrat après une mise en demeure restée sans effet pendant quinze (15) jours.",
         },
         {
-            id: 11,
-            title: "Article 11 : Force majeure",
+            id: 10,
+            title: "Article : Force majeure",
             body: "Aucune des parties ne pourra être tenue responsable d’un retard ou d’une inexécution résultant d’un cas de force majeure au sens de la législation algérienne en vigueur.",
         },
         {
-            id: 12,
-            title: "Article 12 : Litiges et juridiction compétente",
+            id: 11,
+            title: "Article : Litiges et juridiction compétente",
             body: "Tout différend relatif à l’interprétation ou à l’exécution du présent contrat sera soumis aux tribunaux compétents d’Alger, après tentative de résolution amiable.",
         },
     ];
 
-    let nextId = 3;
+    let nextId = articles.length + 1;
+
     function addArticle() {
         articles = [
             ...articles,
@@ -88,9 +88,52 @@
             },
         ];
     }
+
     function removeArticle(id) {
         articles = articles.filter((a) => a.id !== id);
     }
+
+    // Validation
+    let errors = {};
+
+    function validate() {
+        errors = {};
+
+        if (!objet.trim()) errors.objet = "Ce champ est obligatiore";
+
+        if (!title.trim()) errors.title = "Ce champ est obligatoire";
+        if (!contractDate.trim())
+            errors.contractDate = "Ce champ est obligatoire";
+
+        if (!prestataire.name.trim())
+            errors.prestataireName = "Ce champ est obligatoire";
+        if (!prestataire.address.trim())
+            errors.prestataireAddress = "Ce champ est obligatoire";
+        if (!prestataire.rep.trim())
+            errors.prestataireRep = "Ce champ est obligatoire";
+
+        if (!client.name.trim()) errors.clientName = "Ce champ est obligatoire";
+        if (!client.address.trim())
+            errors.clientAddress = "Ce champ est obligatoire";
+        if (!client.rep.trim()) errors.clientRep = "Ce champ est obligatoire";
+
+        if (!amount.trim()) errors.amount = "Ce champ est obligatoire";
+        if (!filename.trim()) errors.filename = "Ce champ est obligatoire";
+
+        if (articles.length <= 0)
+            errors.articles = "Au moins un article est requis";
+
+        articles.forEach((a, i) => {
+            if (!a.title.trim())
+                errors[`articleTitle${i}`] = "Titre obligatoire";
+            if (!a.body.trim())
+                errors[`articleBody${i}`] = "Contenu obligatoire";
+        });
+
+        return Object.keys(errors).length === 0;
+    }
+
+    $: if (errors) validate();
 
     let html2canvasLoaded = false;
     let jsPDFLoaded = false;
@@ -124,10 +167,13 @@
     }
 
     async function exportPDF() {
+        if (!validate()) {
+            alert("Veuillez corriger les erreurs avant d’exporter le PDF.");
+            return;
+        }
+
         try {
             await loadLibs();
-            // html2canvas is available as window.html2canvas
-            // jsPDF is available as window.jspdf.jsPDF
             const contractEl = document.getElementById("contract");
             const opts = { scale: 2, useCORS: true };
             const canvas = await window.html2canvas(contractEl, opts);
@@ -148,7 +194,6 @@
             let heightLeft = pdfImgHeight;
             let position = margin;
 
-            // Add first page
             pdf.addImage(
                 imgData,
                 "PNG",
@@ -180,63 +225,139 @@
         }
     }
 
-    // Quick sample to test on mount
-    onMount(() => {
-        // nothing special
-    });
+    onMount(() => {});
 </script>
 
 <div class="app">
     <div class="editor">
         <h3>Éditeur</h3>
-        <label>Titre du contrat</label>
+
+        <label
+            >Titre du contrat {#if errors.title}<span class="error"
+                    >{errors.title}</span
+                >{/if}</label
+        >
         <input bind:value={title} />
 
-        <label>Date</label>
+        <label
+            >Date {#if errors.contractDate}<span class="error"
+                    >{errors.contractDate}</span
+                >{/if}</label
+        >
         <input bind:value={contractDate} />
 
         <h4>Prestataire</h4>
+        <label
+            >Nom {#if errors.prestataireName}<span class="error"
+                    >{errors.prestataireName}</span
+                >{/if}</label
+        >
         <input bind:value={prestataire.name} placeholder="Nom" />
+
+        <label
+            >Adresse {#if errors.prestataireAddress}<span class="error"
+                    >{errors.prestataireAddress}</span
+                >{/if}</label
+        >
         <input bind:value={prestataire.address} placeholder="Adresse" />
+
+        <label
+            >Représentant {#if errors.prestataireRep}<span class="error"
+                    >{errors.prestataireRep}</span
+                >{/if}</label
+        >
         <input bind:value={prestataire.rep} placeholder="Représentant" />
 
         <h4>Client</h4>
+        <label
+            >Nom {#if errors.clientName}<span class="error"
+                    >{errors.clientName}</span
+                >{/if}</label
+        >
         <input bind:value={client.name} placeholder="Nom" />
+
+        <label
+            >Adresse {#if errors.clientAddress}<span class="error"
+                    >{errors.clientAddress}</span
+                >{/if}</label
+        >
         <input bind:value={client.address} placeholder="Adresse" />
+
+        <label
+            >Représentant {#if errors.clientRep}<span class="error"
+                    >{errors.clientRep}</span
+                >{/if}</label
+        >
         <input bind:value={client.rep} placeholder="Représentant" />
 
-        <h4>Articles</h4>
-        {#each articles as art (art.id)}
-            <div class="article">
-                <input bind:value={art.title} />
-                <textarea rows="4" bind:value={art.body}></textarea>
-                <div style="display:flex;justify-content:flex-end;">
-                    <button on:click={() => removeArticle(art.id)}
-                        >Supprimer</button
-                    >
+        <h4>Objet du contrat</h4>
+        <label>
+            {#if errors.objet}<span class="error">{errors.objet}</span>{/if}
+        </label>
+        <textarea
+            rows="3"
+            bind:value={objet}
+            placeholder="Décrivez l'objet du contrat..."
+        ></textarea>
+
+        <h4>
+            Articles {#if articles.length === 0}<span class="error"
+                    >Veuillez entrer au moins un article.</span
+                >{/if}
+        </h4>
+        {#if articles.length <= 0}{:else}
+            {#each articles as art, i (art.id)}
+                <div class="article">
+                    <label
+                        >{art.title}
+                        {#if errors[`articleTitle${i}`]}<span class="error"
+                                >{errors[`articleTitle${i}`]}</span
+                            >{/if}
+                    </label>
+                    <input bind:value={art.title} />
+
+                    <label
+                        >Contenu
+                        {#if errors[`articleBody${i}`]}<span class="error"
+                                >{errors[`articleBody${i}`]}</span
+                            >{/if}
+                    </label>
+                    <textarea rows="4" bind:value={art.body}></textarea>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <button on:click={() => removeArticle(art.id)}
+                            >Supprimer</button
+                        >
+                    </div>
                 </div>
-            </div>
-        {/each}
+            {/each}
+        {/if}
+
         <div style="display:flex;gap:8px;">
             <button on:click={addArticle}>Ajouter un article</button>
-            <button
-                on:click={() => {
-                    articles = articles.map((a) => ({
-                        ...a,
-                        body: a.body + "\n\n(texte ajouté)",
-                    }));
-                }}>Ajouter un exemple</button
-            >
         </div>
 
         <h4>Export</h4>
+        <label
+            >Nom du fichier {#if errors.filename}<span class="error"
+                    >{errors.filename}</span
+                >{/if}</label
+        >
         <input bind:value={filename} />
-        <div>
-            <button on:click={exportPDF}>Exporter en PDF</button>
-        </div>
 
-        <label>Price</label>
+        <label
+            >Montant {#if errors.amount}<span class="error"
+                    >{errors.amount}</span
+                >{/if}</label
+        >
         <input bind:value={amount} />
+
+        <div>
+            <button
+                on:click={exportPDF}
+                disabled={!validate() || articles.length <= 0}
+                >Exporter en PDF</button
+            >
+        </div>
     </div>
 
     <div class="preview">
@@ -259,10 +380,18 @@
                 Représenté par : {client.rep}
             </p>
 
+            <h4 style="margin-bottom:  0">
+                <strong>Objet du contrat :</strong><br />
+            </h4>
+
+            {objet}
+
             <hr />
 
-            {#each articles as art}
-                <h4 style="margin-bottom:6px">{art.title}</h4>
+            {#each articles as art, i}
+                <h4 style="margin-bottom:6px">
+                    {`Article ${i + 1} : ` + art.title}
+                </h4>
                 <p style="white-space:pre-wrap;">{art.body}</p>
             {/each}
 
@@ -359,11 +488,13 @@
             "Helvetica Neue",
             Arial;
     }
+
     .app {
         display: flex;
         gap: 20px;
         padding: 16px;
     }
+
     .editor {
         width: 420px;
         height: fit-content;
@@ -372,6 +503,7 @@
         padding: 12px;
         border-radius: 8px;
     }
+
     .preview {
         flex: 1;
         border: 1px solid #e6e6e6;
@@ -379,6 +511,7 @@
         border-radius: 8px;
         background: white;
     }
+
     input,
     textarea {
         width: 100%;
@@ -386,35 +519,46 @@
         margin: 6px 0;
         box-sizing: border-box;
     }
+
     button {
         padding: 8px 12px;
         margin: 6px 4px;
     }
+
+    button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
     .article {
         border: 1px dashed #ddd;
         padding: 8px;
         margin-bottom: 8px;
         border-radius: 6px;
     }
+
     #contract {
-        width: 794px; /* A4 at 96dpi approx width */
+        width: 794px;
         padding: 24px;
         background: white;
         color: #000;
     }
+
     h1 {
         text-align: center;
         font-size: 18px;
         margin-bottom: 8px;
     }
-    .meta {
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-    }
+
     .sign {
         margin-top: 40px;
         display: flex;
         justify-content: space-between;
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-left: 6px;
     }
 </style>
