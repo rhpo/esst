@@ -14,7 +14,6 @@
     let contractDate = new Date().toLocaleDateString("fr-FR");
     let amount = "3 600 000 DZD";
     let filename = "contrat_developpement_logiciel.pdf";
-
     let articles = [
         {
             id: 1,
@@ -25,6 +24,56 @@
             id: 2,
             title: "Article 2 : Description du projet",
             body: "Le Prestataire s’engage à concevoir un logiciel de gestion interne destiné à automatiser les processus de facturation, de suivi client et de génération de rapports pour le Client. Le développement comprendra les modules suivants : gestion des utilisateurs, base de données clients, génération de documents PDF et tableau de bord d’analyse.",
+        },
+        {
+            id: 3,
+            title: "Article 3 : Obligations du Prestataire",
+            body: "Le Prestataire s’engage à : Concevoir et développer le logiciel conformément au cahier des charges validé. Effectuer les tests de validation avant la livraison. Assurer la formation du personnel du Client à l’utilisation du logiciel. Fournir une assistance technique pendant une période de trois (3) mois après la livraison finale.",
+        },
+        {
+            id: 4,
+            title: "Article 4 : Obligations du Client",
+            body: "Le Client s’engage à : Fournir au Prestataire toutes les informations nécessaires à la bonne exécution du projet. Valider les livrables intermédiaires dans les délais convenus. Régler les paiements conformément aux modalités prévues à l’article 6.",
+        },
+        {
+            id: 5,
+            title: "Article 5 : Délai d’exécution",
+            body: "La durée totale du projet est fixée à quatre (4) mois à compter de la signature du présent contrat. Tout retard dû à une cause imputable au Client entraînera une prolongation équivalente du délai.",
+        },
+        {
+            id: 6,
+            title: "Article 6 : Conditions financières",
+            body: "Le montant global du contrat est fixé à 3 600 000 DZD, réparti comme suit : 30 % à la signature du contrat (acompte) ; 40 % à la livraison de la version bêta ; 30 % à la réception définitive du logiciel. Les paiements seront effectués par virement bancaire au compte du Prestataire indiqué sur la facture.",
+        },
+        {
+            id: 7,
+            title: "Article 7 : Propriété intellectuelle",
+            body: "Le Prestataire reste propriétaire de ses outils, méthodes, bibliothèques et composants réutilisables. Le Client devient propriétaire exclusif du logiciel final livré, sous réserve du paiement intégral du prix convenu.",
+        },
+        {
+            id: 8,
+            title: "Article 8 : Confidentialité",
+            body: "Chaque partie s’engage à conserver strictement confidentielles les informations échangées dans le cadre du présent contrat et à ne pas les divulguer sans l’accord préalable écrit de l’autre partie.",
+        },
+        {
+            id: 9,
+            title: "Article 9 : Garantie et maintenance",
+            body: "Le Prestataire garantit le bon fonctionnement du logiciel pendant une période de trois (3) mois à compter de sa réception. Pendant cette période, toute anomalie signalée sera corrigée sans frais supplémentaires. Une offre de maintenance annuelle pourra être proposée séparément.",
+        },
+        {
+            id: 10,
+            title: "Article 10 : Résiliation",
+            body: "En cas d’inexécution grave de ses obligations par l’une des parties, l’autre partie pourra résilier le présent contrat après une mise en demeure restée sans effet pendant quinze (15) jours.",
+        },
+        {
+            id: 11,
+            title: "Article 11 : Force majeure",
+            body: "Aucune des parties ne pourra être tenue responsable d’un retard ou d’une inexécution résultant d’un cas de force majeure au sens de la législation algérienne en vigueur.",
+        },
+        {
+            id: 12,
+            title: "Article 12 : Litiges et juridiction compétente",
+            body: "Tout différend relatif à l’interprétation ou à l’exécution du présent contrat sera soumis aux tribunaux compétents d’Alger, après tentative de résolution amiable.",
         },
     ];
 
@@ -185,6 +234,9 @@
         <div>
             <button on:click={exportPDF}>Exporter en PDF</button>
         </div>
+
+        <label>Price</label>
+        <input bind:value={amount} />
     </div>
 
     <div class="preview">
@@ -219,72 +271,84 @@
             <p><strong>Montant :</strong> {amount}</p>
 
             <div class="sign">
-  <div>
-    <p><strong>Pour le Prestataire</strong></p>
-    <p>{prestataire.name}</p>
-    <canvas
-      id="signatureCanvas"
-      width="250"
-      height="80"
-      style="border:1px solid #ccc;border-radius:6px;cursor:crosshair;"
-      on:mousedown={(e) => {
-        const c = e.target;
-        const ctx = c.getContext('2d');
-        let drawing = true;
-        ctx.beginPath();
-        const move = (ev) => {
-          if (!drawing) return;
-          const rect = c.getBoundingClientRect();
-          ctx.lineWidth = 2;
-          ctx.lineCap = 'round';
-          ctx.strokeStyle = '#000';
-          ctx.lineTo(ev.clientX - rect.left, ev.clientY - rect.top);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(ev.clientX - rect.left, ev.clientY - rect.top);
-        };
-        const stop = () => {
-          drawing = false;
-          c.removeEventListener('mousemove', move);
-          c.removeEventListener('mouseup', stop);
-          c.removeEventListener('mouseleave', stop);
-        };
-        c.addEventListener('mousemove', move);
-        c.addEventListener('mouseup', stop);
-        c.addEventListener('mouseleave', stop);
-      }}
-    ></canvas>
-        <button
-      class="no-pdf"
-      on:click={() => {
-        const c = document.getElementById('signatureCanvas');
-        c.getContext('2d').clearRect(0, 0, c.width, c.height);
-      }}
-      style="font-size:12px;color:#555;margin-top:4px;"
-    >
-      Effacer la signature
-    </button>
-  </div>
-  </div>
-  <div>
-    <p><strong>Pour le Client</strong></p>
-    <p>{client.name}</p>
-    <div style="border:1px dashed #ccc;width:250px;height:80px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#999;">
-      (Signature à compléter)
-    </div>
-  </div>
-</div>
+                <div>
+                    <p><strong>Pour le Prestataire</strong></p>
+                    <p>{prestataire.name}</p>
+                    <canvas
+                        id="signatureCanvas"
+                        width="250"
+                        height="80"
+                        style="border:1px solid #ccc;border-radius:6px;cursor:crosshair;"
+                        on:mousedown={(e) => {
+                            const c = e.target;
+                            const ctx = c.getContext("2d");
+                            let drawing = true;
+                            ctx.beginPath();
+                            const move = (ev) => {
+                                if (!drawing) return;
+                                const rect = c.getBoundingClientRect();
+                                ctx.lineWidth = 2;
+                                ctx.lineCap = "round";
+                                ctx.strokeStyle = "#000";
+                                ctx.lineTo(
+                                    ev.clientX - rect.left,
+                                    ev.clientY - rect.top,
+                                );
+                                ctx.stroke();
+                                ctx.beginPath();
+                                ctx.moveTo(
+                                    ev.clientX - rect.left,
+                                    ev.clientY - rect.top,
+                                );
+                            };
+                            const stop = () => {
+                                drawing = false;
+                                c.removeEventListener("mousemove", move);
+                                c.removeEventListener("mouseup", stop);
+                                c.removeEventListener("mouseleave", stop);
+                            };
+                            c.addEventListener("mousemove", move);
+                            c.addEventListener("mouseup", stop);
+                            c.addEventListener("mouseleave", stop);
+                        }}
+                    ></canvas>
+                    <button
+                        class="no-pdf"
+                        on:click={() => {
+                            const c =
+                                document.getElementById("signatureCanvas");
+                            c.getContext("2d").clearRect(
+                                0,
+                                0,
+                                c.width,
+                                c.height,
+                            );
+                        }}
+                        style="font-size:12px;color:#555;margin-top:4px;"
+                    >
+                        Effacer la signature
+                    </button>
+                </div>
+            </div>
+            <div>
+                <p><strong>Pour le Client</strong></p>
+                <p>{client.name}</p>
+                <div
+                    style="border:1px dashed #ccc;width:250px;height:80px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#999;"
+                >
+                    (Signature à compléter)
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-
     @media print {
-  .no-pdf {
-    display: none !important;
-  }
-}
+        .no-pdf {
+            display: none !important;
+        }
+    }
 
     :global(body) {
         font-family:
@@ -302,7 +366,7 @@
     }
     .editor {
         width: 420px;
-        max-height: 90vh;
+        height: fit-content;
         overflow: auto;
         border: 1px solid #e6e6e6;
         padding: 12px;
