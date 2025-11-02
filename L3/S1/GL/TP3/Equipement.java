@@ -16,12 +16,18 @@ public class Equipement {
         this.listeComposants = new ArrayList<>();
     }
 
+    /**
+     * Adds a component to the list if it is not null and not already present.
+     */
     public void ajouterComposant(Composant c) {
         if (c != null && !listeComposants.contains(c)) {
             listeComposants.add(c);
         }
     }
 
+    /**
+     * Removes the specified composant from the list of composants.
+     */
     public void supprimerComposant(Composant c) {
         listeComposants.remove(c);
     }
@@ -44,6 +50,9 @@ public class Equipement {
         return numSerie;
     }
 
+    /**
+     * Returns the designation.
+     */
     public String getDesignation() {
         return designation;
     }
@@ -52,6 +61,9 @@ public class Equipement {
         return prix;
     }
 
+    /**
+     * Returns the type of equipment.
+     */
     public Type getTypeEquip() {
         return typeEquip;
     }
