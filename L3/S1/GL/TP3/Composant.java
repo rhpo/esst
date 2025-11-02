@@ -19,6 +19,9 @@ public class Composant {
         this.etatComposant = etatComposant;
     }
 
+    /**
+     * Replaces the current component's attributes with those of the specified component.
+     */
     public void remplacer(Composant c) {
             this.nomComposant = c.nomComposant;
             this.dateFabrication = c.dateFabrication;
@@ -27,18 +30,30 @@ public class Composant {
             this.etatComposant = c.etatComposant;
     }
 
+    /**
+     * Checks if the component is functional.
+     */
     public boolean estFonctionnel() {
         return this.etatComposant == Etat.Fonctionnel;
     }
 
+    /**
+     * Returns the value of refComposant.
+     */
     public int getRefComposant() {
         return refComposant;
     }
 
+    /**
+     * Returns the name of the component.
+     */
     public String getNomComposant() {
         return nomComposant;
     }
 
+    /**
+     * Returns the date fabrication.
+     */
     public Date getDateFabrication() {
         return dateFabrication;
     }
@@ -47,10 +62,16 @@ public class Composant {
         return dureeVie;
     }
 
+    /**
+     * Returns the price of the component.
+     */
     public double getPrixComposant() {
         return prixComposant;
     }
 
+    /**
+     * Returns the current state of the component.
+     */
     public Etat getEtatComposant() {
         return etatComposant;
     }
