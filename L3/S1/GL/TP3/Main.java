@@ -1,6 +1,9 @@
 import java.util.Date;
 
 public class Main {
+    /**
+     * Main method to demonstrate the functionality of the Equipement and Composant classes.
+     */
     public static void main(String[] args) {
 
         Equipement ordinateur = new Equipement(1, "PC Dell", 1200.0, Type.Micro);
